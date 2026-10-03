@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CarePoint Hospital</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#10302f;--muted:#4f6b69;--bg:#f6fbfa;--card:#fff;--brand:#0b6e69;--dark:#084b48;--tint:#dff1ee;--alert:#d6333f;--line:#d3e5e2}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+[hidden]{display:none!important}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+section{padding:60px 0}
+h2{font-size:1.7rem;margin-bottom:8px;line-height:1.2}
+.sub{color:var(--muted);margin-bottom:28px;max-width:60ch}
+label{display:block;font-size:.8rem;font-weight:700;margin:10px 0 3px}
+input,select,textarea{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;font:inherit;background:#fff}
+.btn{display:inline-block;background:var(--brand);color:#fff;border:0;border-radius:8px;padding:10px 18px;font:inherit;font-weight:700;cursor:pointer;white-space:nowrap}
+.btn:hover{background:var(--dark)}
+.btn.sm{padding:4px 10px;font-size:.8rem}.btn.del{background:var(--alert)}.btn.grey{background:#e4efed;color:var(--ink)}
+.btn.ghost{background:none;border:2px solid #fff}
+/* public site */
+.emg{background:var(--alert);color:#fff;font-size:.88rem;text-align:center;padding:7px 12px}
+header{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+nav{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 20px;max-width:1080px;margin:0 auto;flex-wrap:wrap}
+.logo{font-weight:800;font-size:1.2rem;color:var(--brand)}
+.links{display:flex;gap:18px;font-weight:500;flex-wrap:wrap}
+.links a{color:inherit;text-decoration:none}.links a:hover{color:var(--brand)}
+.hero{background:var(--dark);color:#fff;padding:64px 0 70px}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center}
+.hero h1{font-size:2.5rem;line-height:1.15;margin-bottom:14px}
+.hero p{color:#c7e6e2;max-width:46ch;margin-bottom:22px}
+.book{background:var(--card);color:var(--ink);border-radius:12px;padding:22px}
+.book .btn{width:100%;margin-top:14px}
+#bmsg{margin-top:8px;font-weight:700;color:var(--brand)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:-34px;position:relative}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;text-align:center}
+.stat b{display:block;font-size:1.6rem;color:var(--brand)}.stat span{color:var(--muted);font-size:.88rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.c{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px}
+.c h3{font-size:1.02rem}.c p{color:var(--muted);font-size:.9rem}
+.av{width:54px;height:54px;border-radius:50%;background:var(--tint);color:var(--brand);display:grid;place-items:center;font-weight:800;margin-bottom:10px}
+.tag{display:inline-block;background:var(--tint);color:var(--dark);font-size:.78rem;font-weight:700;padding:2px 10px;border-radius:99px;margin-top:8px}
+.alt{background:var(--tint)}
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+footer{background:var(--ink);color:#b9d2cf;padding:24px 0;font-size:.88rem;text-align:center}
+/* staff portal */
+#portal{display:flex;min-height:calc(100vh - 100px)}
+aside{width:220px;background:var(--dark);color:#fff;padding:14px 10px;flex-shrink:0}
+aside small{display:block;color:#8fc4bf;padding:10px 10px 4px;font-size:.74rem}
+aside button{display:block;width:100%;text-align:left;background:none;border:0;color:#d4ebe8;padding:8px 10px;border-radius:6px;font:inherit;cursor:pointer}
+aside button:hover{background:#0d605b}aside button.on{background:#fff;color:var(--dark);font-weight:700}
+main{flex:1;padding:22px;min-width:0}
+main h2{margin-bottom:12px}
+.bar{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}.bar input{flex:1;min-width:170px}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);font-size:.87rem;white-space:nowrap;max-width:240px;overflow:hidden;text-overflow:ellipsis}
+th{background:var(--brand);color:#fff}
+td.act{display:flex;gap:6px}
+.empty{padding:26px;text-align:center;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;cursor:pointer}
+.card b{display:block;font-size:1.6rem;color:var(--brand)}.card span{color:var(--muted);font-size:.88rem}
+.note{color:var(--muted);max-width:70ch;font-size:.92rem;margin-bottom:14px}
+dialog{border:0;border-radius:12px;padding:22px;width:min(640px,94vw);max-height:92vh;overflow:auto}
+dialog::backdrop{background:#0008}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:4px 14px}.fg .full{grid-column:1/-1}
+.ft{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
+@media(max-width:760px){.hero .wrap,.contact{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.hero h1{font-size:2rem}
+#portal{flex-direction:column}aside{width:100%;display:flex;overflow-x:auto;padding:8px}aside small{display:none}aside button{width:auto;white-space:nowrap}.fg{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="emg">Emergency? Call <b>108</b> or our 24/7 line <b>+91 00000 00000</b></div>
+<header><nav>
+  <a class="logo" href="#" onclick="show('site');return false" style="text-decoration:none">CarePoint Hospital</a>
+  <div class="links" id="plinks"><a href="#departments">Departments</a><a href="#doctors">Doctors</a><a href="#book">Book</a><a href="#contact">Contact</a></div>
+  <span style="display:flex;gap:8px"><button class="btn grey" id="pfbtn" onclick="show('profile')">My profile</button><button class="btn" id="swbtn" onclick="show($('site').hidden?'site':'portal')">Staff portal</button></span>
+</nav></header>
+
+<div id="site">
+  <div class="hero"><div class="wrap">
+    <div><h1>Quality care, close to home.</h1><p>Book a doctor, explore our departments and manage your visits online. Replace this text with your hospital's own message.</p><a class="btn ghost" href="#departments" style="text-decoration:none">See our departments</a></div>
+    <form class="book" id="book" onsubmit="book(event)">
+      <h3>Book an appointment</h3>
+      <label for="b_name">Full name</label><input id="b_name" name="name" required>
+      <label for="b_phone">Phone number</label><input id="b_phone" name="phone" type="tel" required>
+      <label for="b_doc">Doctor</label><select id="b_doc" name="doctor" required></select>
+      <label for="b_date">Preferred date</label><input id="b_date" name="date" type="date" required>
+      <label for="b_rs">Reason</label><input id="b_rs" name="reason">
+      <button class="btn" type="submit">Request appointment</button><p id="bmsg" role="status"></p>
+    </form>
+  </div></div>
+  <div class="wrap stats" id="stats"></div>
+  <section id="departments"><div class="wrap"><h2>Our departments</h2><p class="sub">Loaded from the Departments module in the staff portal.</p><div class="grid" id="sdept"></div></div></section>
+  <section id="doctors" class="alt"><div class="wrap"><h2>Meet our doctors</h2><p class="sub">Loaded from the Doctors module in the staff portal.</p><div class="grid" id="sdoc"></div></div></section>
+  <section id="contact"><div class="wrap contact">
+    <div><h2>Visit or contact us</h2><p class="sub">Main Road, Your City, State - 000000<br>info@carepoint.example<br>OPD: 8 AM - 8 PM</p></div>
+    <form onsubmit="event.preventDefault();this.reset();alert('Message sent (demo).')">
+      <label for="cn">Name</label><input id="cn" required><label for="ce">Email</label><input id="ce" type="email" required>
+      <label for="cm">Message</label><textarea id="cm" rows="3" required></textarea><button class="btn" style="margin-top:12px">Send message</button>
+    </form>
+  </div></section>
+  <footer>© 2026 CarePoint Hospital. Replace with your hospital name.</footer>
+</div>
+
+<div id="profile" hidden><section><div class="wrap" id="pbody"></div></section></div>
+<style>.ps{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:14px}.ps h3{margin-bottom:6px}.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:4px 20px}</style>
+<div id="portal" hidden><aside id="side"></aside><main id="main"></main></div>
+<dialog id="dlg"><form id="frm" method="dialog"></form></dialog>
+
+<script>
+/* Schema from the ER diagram. Types: text tel email number date time area bool sel:A|B fk:entity ; trailing ! = required */
+const E={
+patient:{t:'Patients',g:'People',pk:'PatientID',d:r=>r.FirstName+' '+r.LastName,f:[['AadhaarNo','text'],['FirstName','text!'],['LastName','text'],['DOB','date'],['Gender','sel:Male|Female|Other'],['BloodGroup','sel:A+|A-|B+|B-|AB+|AB-|O+|O-'],['Phone','tel!'],['Email','email'],['Address','area'],['EmergencyContactName','text'],['EmergencyContactPhone','tel'],['RegistrationDate','date']]},
+doctor:{t:'Doctors',g:'People',pk:'DoctorID',d:r=>'Dr. '+r.FirstName+' '+r.LastName,f:[['DepartmentID','fk:department!'],['FirstName','text!'],['LastName','text!'],['Gender','sel:Male|Female|Other'],['Qualification','text'],['Specialization','text'],['Phone','tel'],['Email','email'],['ConsultationFee','number'],['JoiningDate','date']]},
+department:{t:'Departments',g:'People',pk:'DepartmentID',d:r=>r.DepartmentName,f:[['DepartmentName','text!'],['Description','area'],['PhoneNo','tel'],['Location','text']]},
+appointment:{t:'Appointments',g:'Clinical',pk:'AppointmentID',d:r=>'#'+r.AppointmentID+' ('+r.AppointmentDate+')',f:[['PatientID','fk:patient!'],['DoctorID','fk:doctor!'],['AppointmentDate','date!'],['StartTime','time'],['EndTime','time'],['Type','sel:Consultation|Follow-up|Emergency|Procedure'],['Reason','area'],['Status','sel:Scheduled|Completed|Cancelled|No-show'],['CreatedAt','date']]},
+medhistory:{t:'Medical History',g:'Clinical',pk:'HistoryID',d:r=>'History #'+r.HistoryID,f:[['PatientID','fk:patient!'],['PastIllnesses','area'],['PastSurgeries','area'],['FamilyHistory','area'],['ChronicConditions','area'],['Allergies','area'],['Notes','area'],['CreatedAt','date']]},
+insurance:{t:'Insurance',g:'Clinical',pk:'InsuranceID',d:r=>r.ProviderName+' '+r.PolicyNumber,f:[['PatientID','fk:patient!'],['ProviderName','text!'],['PolicyNumber','text!'],['PolicyHolderName','text'],['Relationship','text'],['CoverageType','text'],['ValidFrom','date'],['ValidTo','date']]},
+prescription:{t:'Prescriptions',g:'Pharmacy',pk:'PrescriptionID',d:r=>'Rx #'+r.PrescriptionID,f:[['AppointmentID','fk:appointment!'],['DoctorID','fk:doctor!'],['Description','area'],['Notes','area']]},
+rxitem:{t:'Prescription Items',g:'Pharmacy',pk:'PrescriptionItemID',d:r=>'Item #'+r.PrescriptionItemID,f:[['PrescriptionID','fk:prescription!'],['MedicineID','fk:medicine!'],['Dose','text'],['Frequency','text'],['Duration','text'],['Instructions','area']]},
+medicine:{t:'Medicines',g:'Pharmacy',pk:'MedicineID',d:r=>r.MedicineName,f:[['MedicineName','text!'],['Category','text'],['Description','area'],['UnitPrice','number'],['IsActive','bool']]},
+service:{t:'Services',g:'Billing',pk:'ServiceID',d:r=>r.ServiceName,f:[['ServiceName','text!'],['Description','area'],['Charge','number!'],['IsActive','bool']]},
+bill:{t:'Bills',g:'Billing',pk:'BillID',d:r=>'Bill #'+r.BillID,f:[['AppointmentID','fk:appointment'],['PatientID','fk:patient!'],['BillDate','date'],['Subtotal','number'],['Discount','number'],['Tax','number'],['TotalAmount','number'],['Status','sel:Unpaid|Partially Paid|Paid|Cancelled'],['Notes','area']]},
+billitem:{t:'Bill Items',g:'Billing',pk:'BillItemID',d:r=>'Bill item #'+r.BillItemID,f:[['BillID','fk:bill!'],['ServiceID','fk:service'],['Description','text'],['Quantity','number!'],['UnitPrice','number!'],['Amount','number']]},
+payment:{t:'Payments',g:'Billing',pk:'PaymentID',d:r=>'Payment #'+r.PaymentID,f:[['BillID','fk:bill!'],['PaymentDate','date'],['PaymentMethod','sel:Cash|Card|UPI|Net banking|Insurance'],['AmountPaid','number!'],['ReferenceNo','text'],['Status','sel:Completed|Pending|Failed|Refunded'],['Notes','area']]},
+floorward:{t:'Floors / Wards',g:'Facilities',pk:'FloorWardID',d:r=>r.FloorWardName,f:[['FloorWardName','text!'],['Description','area']]},
+room:{t:'Rooms',g:'Facilities',pk:'RoomID',d:r=>'Room '+r.RoomNumber,f:[['FloorWardID','fk:floorward!'],['RoomNumber','text!'],['RoomType','sel:General|Semi-private|Private|ICU|Operation theatre'],['BedCount','number'],['OccupancyStatus','sel:Available|Occupied|Maintenance'],['ChargePerDay','number'],['Status','sel:Active|Inactive'],['Notes','area']]}
+};
+const $=id=>document.getElementById(id),today=()=>new Date().toISOString().slice(0,10),num=v=>parseFloat(v)||0;
+const lab=n=>n.replace(/ID$/,' ID').replace(/([a-z])([A-Z])/g,'$1 $2').trim();
+const parse=s=>{const req=s.endsWith('!');const[ty,x]=s.replace('!','').split(':');return{ty,x,req}};
+const DEF=['RegistrationDate','AppointmentDate','BillDate','PaymentDate','CreatedAt'];
+
+/* storage: browser only. Replace save()/add() with calls to your backend API + database later */
+let db=null;try{db=JSON.parse(localStorage.getItem('hms'))}catch(e){}
+if(!db){db={seq:{}};Object.keys(E).forEach(k=>db[k]=[]);seed()}
+const save=()=>{try{localStorage.setItem('hms',JSON.stringify(db))}catch(e){}};
+function add(k,o){db.seq[k]=(db.seq[k]||0)+1;o[E[k].pk]=db.seq[k];db[k].push(o);return o}
+function seed(){
+ add('department',{DepartmentName:'Cardiology',Description:'Heart checks, ECG and cardiac care.',PhoneNo:'040-111111',Location:'Block A'});
+ add('department',{DepartmentName:'Pediatrics',Description:'Care for infants, children and teens.',PhoneNo:'040-222222',Location:'Block B'});
+ add('department',{DepartmentName:'Orthopedics',Description:'Bone, joint and sports injury treatment.',PhoneNo:'040-333333',Location:'Block C'});
+ add('doctor',{DepartmentID:1,FirstName:'A.',LastName:'Rao',Gender:'Male',Qualification:'MD, DM',Specialization:'Cardiologist',Phone:'9000000001',ConsultationFee:500,JoiningDate:'2020-01-10'});
+ add('doctor',{DepartmentID:2,FirstName:'S.',LastName:'Khan',Gender:'Female',Qualification:'MD',Specialization:'Pediatrician',Phone:'9000000002',ConsultationFee:400,JoiningDate:'2021-03-05'});
+ add('doctor',{DepartmentID:3,FirstName:'M.',LastName:'Reddy',Gender:'Male',Qualification:'MS Ortho',Specialization:'Orthopedic surgeon',Phone:'9000000003',ConsultationFee:600,JoiningDate:'2019-07-20'});
+ add('patient',{AadhaarNo:'1111 2222 3333',FirstName:'Ravi',LastName:'Kumar',DOB:'1985-04-12',Gender:'Male',BloodGroup:'O+',Phone:'9111111111',RegistrationDate:today()});
+ add('appointment',{PatientID:1,DoctorID:1,AppointmentDate:today(),StartTime:'10:00',EndTime:'10:30',Type:'Consultation',Reason:'Chest pain check',Status:'Scheduled',CreatedAt:today()});
+ add('medicine',{MedicineName:'Paracetamol 500mg',Category:'Analgesic',UnitPrice:2,IsActive:true});
+ add('service',{ServiceName:'Consultation',Charge:500,IsActive:true});add('service',{ServiceName:'ECG',Charge:300,IsActive:true});
+ add('floorward',{FloorWardName:'Ground Floor'});
+ add('room',{FloorWardID:1,RoomNumber:'101',RoomType:'General',BedCount:6,OccupancyStatus:'Available',ChargePerDay:800,Status:'Active'});
+}
+const row=(k,id)=>db[k].find(r=>r[E[k].pk]==id);
+const ref=(k,id)=>{const r=row(k,id);return r?E[k].d(r):(id||'')};
+
+/* ---- public website ---- */
+let portalOn=false,cur='dash',q='',editing=null;
+function show(w){portalOn=w=='portal';$('site').hidden=w!='site';$('profile').hidden=w!='profile';$('portal').hidden=!portalOn;$('plinks').hidden=w!='site';$('pfbtn').hidden=w!='site';$('swbtn').textContent=w=='site'?'Staff portal':'Back to website';window.scrollTo(0,0);if(portalOn){side();view()}else if(w=='profile')prof();else site()}
+function site(){
+ const beds=db.room.reduce((s,r)=>s+num(r.BedCount),0);
+ $('stats').innerHTML=[[db.doctor.length,'Doctors'],[db.department.length,'Departments'],[beds,'Beds'],['24/7','Emergency']].map(x=>'<div class="stat"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>').join('');
+ $('sdept').innerHTML=db.department.map(d=>'<div class="c"><h3>'+d.DepartmentName+'</h3><p>'+(d.Description||'')+'</p><span class="tag">'+(d.Location||'')+'</span></div>').join('');
+ $('sdoc').innerHTML=db.doctor.map(d=>'<div class="c"><div class="av">'+(d.FirstName[0]+(d.LastName[0]||''))+'</div><h3>'+E.doctor.d(d)+'</h3><p>'+(d.Specialization||'')+' - '+ref('department',d.DepartmentID)+'</p><span class="tag">Fee ₹'+(d.ConsultationFee||0)+'</span><br><button class="btn sm" style="margin-top:10px" onclick="dprof('+d.DoctorID+')">View profile</button></div>').join('');
+ $('b_doc').innerHTML='<option value="">Select doctor</option>'+db.doctor.map(d=>'<option value="'+d.DoctorID+'">'+E.doctor.d(d)+' ('+ref('department',d.DepartmentID)+')</option>').join('');
+ $('b_date').min=today();
+}
+function book(ev){
+ ev.preventDefault();const f=ev.target,v=n=>f[n].value.trim();
+ let p=db.patient.find(x=>x.Phone==v('phone'));
+ if(!p){const nm=v('name').split(/\s+/);p=add('patient',{FirstName:nm[0],LastName:nm.slice(1).join(' '),Phone:v('phone'),RegistrationDate:today()})}
+ const a=add('appointment',{PatientID:p.PatientID,DoctorID:+v('doctor'),AppointmentDate:v('date'),Type:'Consultation',Reason:v('reason'),Status:'Scheduled',CreatedAt:today()});
+ save();f.reset();$('bmsg').textContent='Appointment #'+a.AppointmentID+' requested. We will call you to confirm.';
+}
+
+/* ---- staff portal ---- */
+function side(){
+ let h='<button class="'+(cur=='dash'?'on':'')+'" onclick="go(\'dash\')">Dashboard</button>',g='';
+ for(const k in E){if(E[k].g!=g){g=E[k].g;h+='<small>'+g+'</small>'}h+='<button class="'+(cur==k?'on':'')+'" onclick="go(\''+k+'\')">'+E[k].t+'</button>'}
+ $('side').innerHTML=h;
+}
+function go(k){cur=k;q='';side();view()}
+function cell(c,r){const f=E[cur].f.find(x=>x[0]==c);if(!f)return r[c];const p=parse(f[1]),v=r[c];return p.ty=='fk'?ref(p.x,v):p.ty=='bool'?(v?'Yes':'No'):(v==null?'':v)}
+function view(){
+ if(cur=='dash')return dash();
+ const e=E[cur],cols=[e.pk,...e.f.map(f=>f[0])];
+ const rows=db[cur].filter(r=>!q||JSON.stringify(cols.map(c=>cell(c,r))).toLowerCase().includes(q));
+ let h='<h2>'+e.t+'</h2><div class="bar"><input id="q" placeholder="Search '+e.t.toLowerCase()+'" value="'+q+'" aria-label="Search" oninput="q=this.value.toLowerCase();view();var i=$(\'q\');i.focus();i.setSelectionRange(99,99)"><button class="btn" onclick="edit()">Add new</button></div>';
+ h+='<div class="scroll"><table><thead><tr>'+cols.map(c=>'<th>'+lab(c)+'</th>').join('')+'<th>Actions</th></tr></thead><tbody>';
+ h+=rows.map(r=>'<tr>'+cols.map(c=>'<td>'+cell(c,r)+'</td>').join('')+'<td class="act">'+xa(r)+'<button class="btn sm grey" onclick="edit('+r[e.pk]+')">Edit</button><button class="btn sm del" onclick="del('+r[e.pk]+')">Delete</button></td></tr>').join('')+'</tbody></table>';
+ if(!rows.length)h+='<p class="empty">No records yet. Select Add new to create one.</p>';
+ $('main').innerHTML=h+'</div>';
+}
+function dash(){
+ const paid=db.payment.filter(p=>p.Status=='Completed').reduce((s,p)=>s+num(p.AmountPaid),0);
+ const c=[['Patients',db.patient.length,'patient'],['Doctors',db.doctor.length,'doctor'],['Departments',db.department.length,'department'],['Appointments today',db.appointment.filter(a=>a.AppointmentDate==today()).length,'appointment'],['Unpaid bills',db.bill.filter(b=>b.Status!='Paid'&&b.Status!='Cancelled').length,'bill'],['Revenue collected','₹'+paid.toLocaleString('en-IN'),'payment'],['Rooms available',db.room.filter(r=>r.OccupancyStatus=='Available').length,'room'],['Medicines',db.medicine.length,'medicine']];
+ $('main').innerHTML='<h2>Dashboard</h2><p class="note">Typical flow: add a patient, book an appointment with a doctor, write a prescription, create a bill with bill items, then record a payment. Website visitors who book online appear under Appointments.</p><div class="cards">'+c.map(x=>'<div class="card" onclick="go(\''+x[2]+'\')"><b>'+x[1]+'</b><span>'+x[0]+'</span></div>').join('')+'</div>';
+}
+/* ER relationships as one-click actions: Appointment generates Prescription / creates Bill, Bill has Items / paid by Payment, Prescription has Items, Floor allocated to Rooms, Patient has History + Insurance */
+const X={doctor:[['Profile','dp']],patient:[['Full record','rec']],appointment:[['Prescribe','prescription'],['Create bill','bill']],prescription:[['Add medicine','rxitem']],bill:[['Add item','billitem'],['Pay','payment']],floorward:[['Add room','room']]};
+function xa(r){return(X[cur]||[]).map(x=>'<button class="btn sm" onclick="rel(\''+x[1]+'\','+r[E[cur].pk]+')">'+x[0]+'</button>').join('')}
+function rel(t,id){
+ const s=cur,r=row(s,id);if(t=='rec')return rec(id);if(t=='dp')return dprof(id);let p={};
+ if(s=='appointment')p=t=='bill'?{AppointmentID:id,PatientID:r.PatientID}:{AppointmentID:id,DoctorID:r.DoctorID};
+ if(s=='prescription')p={PrescriptionID:id};
+ if(s=='bill')p=t=='payment'?{BillID:id,AmountPaid:r.TotalAmount}:{BillID:id};
+ if(s=='floorward')p={FloorWardID:id};
+ cur=t;side();view();edit(null,p);
+}
+/* ---- profiles: patient "My profile" (opened by phone number; add a real login in your backend) and doctor profile ---- */
+let pid=null;
+function plook(ev){
+ ev.preventDefault();const v=n=>$(n).value.trim();let p=db.patient.find(x=>x.Phone==v('pp'));
+ if(!p){
+  if(!v('pn')){$('pmsg').textContent='No profile found for this number. Enter your name to create one.';return}
+  const nm=v('pn').split(/\s+/);p=add('patient',{FirstName:nm[0],LastName:nm.slice(1).join(' '),Email:v('pe'),Phone:v('pp'),RegistrationDate:today()});save();
+ }
+ pid=p.PatientID;prof();
+}
+function prof(){
+ const p=pid&&row('patient',pid);
+ if(!p){pid=null;$('pbody').innerHTML='<h2>My profile</h2><p class="sub">Enter your name, email and phone number. If you are already registered, your profile opens using the phone number. If not, we create one for you.</p><form class="book" style="max-width:380px;border:1px solid var(--line)" onsubmit="plook(event)"><label for="pn">Full name</label><input id="pn" autocomplete="name"><label for="pe">Email</label><input id="pe" type="email" autocomplete="email"><label for="pp">Phone number</label><input id="pp" type="tel" required autocomplete="tel"><button class="btn">Open or create profile</button><p id="pmsg" role="status" style="margin-top:8px;color:var(--alert);font-weight:700"></p></form>';return}
+ const age=p.DOB?Math.floor((Date.now()-new Date(p.DOB))/31557600000):'',mine=k=>db[k].filter(x=>x.PatientID==pid);
+ const ap=mine('appointment').sort((a,b)=>String(b.AppointmentDate).localeCompare(String(a.AppointmentDate))),ids=ap.map(a=>a.AppointmentID);
+ const S=(t,a,fn)=>'<div class="ps"><h3>'+t+'</h3>'+(a.length?'<ul style="margin:6px 0 0 20px">'+a.map(x=>'<li>'+fn(x)+'</li>').join('')+'</ul>':'<p class="note" style="margin:0">Nothing yet</p>')+'</div>';
+ const kv=[['Patient ID',p.PatientID],['Gender',p.Gender],['Age',age],['Date of birth',p.DOB],['Blood group',p.BloodGroup],['Address',p.Address],['Aadhaar no.',p.AadhaarNo],['Emergency contact',[p.EmergencyContactName,p.EmergencyContactPhone].filter(Boolean).join(' - ')],['Registered',p.RegistrationDate]].filter(x=>x[1]!==''&&x[1]!=null);
+ $('pbody').innerHTML='<div class="ps" style="display:flex;gap:16px;align-items:center;flex-wrap:wrap"><div class="av" style="width:72px;height:72px;margin:0;font-size:1.4rem">'+p.FirstName[0]+(p.LastName?p.LastName[0]:'')+'</div><div style="flex:1;min-width:160px"><h2 style="margin:0">'+E.patient.d(p)+'</h2><p class="note" style="margin:0">Patient ID '+p.PatientID+'</p></div><button class="btn" onclick="cur=\'patient\';edit(pid)">Edit details</button><button class="btn grey" onclick="pid=null;prof()">Switch patient</button></div>'
+ +'<form class="ps" onsubmit="psave(event)"><h3>Name, email and phone</h3><div class="fg">'+[['pf1','First name',p.FirstName,'text'],['pf2','Last name',p.LastName,'text'],['pf3','Email',p.Email,'email'],['pf4','Phone number',p.Phone,'tel']].map(f=>'<div><label for="'+f[0]+'">'+f[1]+'</label><input id="'+f[0]+'" type="'+f[3]+'" value="'+String(f[2]||'').replace(/"/g,'&quot;')+'"'+(f[0]=='pf3'?'':' required')+'></div>').join('')+'</div><div class="ft" style="align-items:center"><span id="pfm" role="status" style="font-weight:700;color:var(--brand)"></span><button class="btn">Save changes</button></div></form>'
+ +'<div class="ps"><h3>Personal details</h3><div class="kv">'+kv.map(x=>'<p><b>'+x[0]+':</b> '+x[1]+'</p>').join('')+'</div></div>'
+ +S('Medical history',mine('medhistory'),x=>'Allergies: '+(x.Allergies||'none noted')+'; chronic conditions: '+(x.ChronicConditions||'none noted')+(x.PastSurgeries?'; surgeries: '+x.PastSurgeries:''))
+ +S('Insurance',mine('insurance'),x=>x.ProviderName+', policy '+x.PolicyNumber+(x.CoverageType?' ('+x.CoverageType+')':'')+', valid to '+(x.ValidTo||'-'))
+ +S('Appointments',ap,x=>x.AppointmentDate+' '+(x.StartTime||'')+' with '+ref('doctor',x.DoctorID)+' - '+x.Status+(x.Reason?' ('+x.Reason+')':''))
+ +S('Prescriptions',db.prescription.filter(r=>ids.includes(r.AppointmentID)),r=>{const it=db.rxitem.filter(i=>i.PrescriptionID==r.PrescriptionID).map(i=>ref('medicine',i.MedicineID)+' '+[i.Dose,i.Frequency,i.Duration].filter(Boolean).join(' '));return 'Rx #'+r.PrescriptionID+' by '+ref('doctor',r.DoctorID)+': '+(it.length?it.join(', '):'no medicines listed')})
+ +S('Bills',mine('bill'),b=>{const pd=db.payment.filter(y=>y.BillID==b.BillID&&y.Status=='Completed').reduce((s,y)=>s+num(y.AmountPaid),0);return 'Bill #'+b.BillID+' ('+(b.BillDate||'')+'): total ₹'+(b.TotalAmount||0)+', paid ₹'+pd+' - '+b.Status});
+}
+function psave(ev){
+ ev.preventDefault();const p=row('patient',pid),v=n=>$(n).value.trim(),ph=v('pf4');
+ if(db.patient.some(x=>x.PatientID!=pid&&x.Phone==ph)){$('pfm').style.color='var(--alert)';$('pfm').textContent='This phone number already belongs to another patient.';return}
+ p.FirstName=v('pf1');p.LastName=v('pf2');p.Email=v('pf3');p.Phone=ph;save();prof();$('pfm').textContent='Saved.';
+}
+function dprof(id){
+ const d=row('doctor',id),R=(a,b)=>b?'<p><b>'+a+':</b> '+b+'</p>':'';
+ $('frm').innerHTML='<div class="av">'+d.FirstName[0]+(d.LastName[0]||'')+'</div><h3>'+E.doctor.d(d)+'</h3><p class="note">'+(d.Specialization||'')+'</p>'+R('Department',ref('department',d.DepartmentID))+R('Qualification',d.Qualification)+R('Consultation fee','₹'+(d.ConsultationFee||0))+R('Joined',d.JoiningDate)+R('Gender',d.Gender)+R('Phone',d.Phone)+R('Email',d.Email)+R('Upcoming appointments',String(db.appointment.filter(a=>a.DoctorID==id&&a.Status=='Scheduled').length))
+ +'<div class="ft"><button type="button" class="btn grey" onclick="$(\'dlg\').close()">Close</button>'+(portalOn?'':'<button type="button" class="btn" onclick="$(\'b_doc\').value='+id+';$(\'dlg\').close();$(\'book\').scrollIntoView()">Book this doctor</button>')+'</div>';
+ $('dlg').showModal();
+}
+function rec(id){
+ const p=row('patient',id),L=(k,fn)=>{const a=db[k].filter(x=>x.PatientID==id);return a.length?'<ul style="margin:4px 0 12px 20px">'+a.map(x=>'<li>'+fn(x)+'</li>').join('')+'</ul>':'<p class="note">None yet</p>'};
+ $('frm').innerHTML='<h3>'+E.patient.d(p)+'</h3><p class="note">'+[p.Gender,p.BloodGroup,'DOB '+(p.DOB||'-'),p.Phone].filter(Boolean).join(', ')+'</p><h3>Medical history</h3>'+L('medhistory',x=>'Allergies: '+(x.Allergies||'-')+'; chronic: '+(x.ChronicConditions||'-'))+'<h3>Insurance</h3>'+L('insurance',x=>x.ProviderName+' '+x.PolicyNumber+' (valid to '+(x.ValidTo||'-')+')')+'<h3>Appointments</h3>'+L('appointment',x=>x.AppointmentDate+' with '+ref('doctor',x.DoctorID)+' - '+x.Status)+'<h3>Bills</h3>'+L('bill',x=>'Bill #'+x.BillID+', ₹'+x.TotalAmount+' - '+x.Status)+'<div class="ft"><button type="button" class="btn grey" onclick="$(\'dlg\').close()">Close</button></div>';
+ $('dlg').showModal();
+}
+function edit(id,pre){
+ const e=E[cur];editing=id?row(cur,id):null;const r=editing||pre||{};
+ let h='<h3>'+(id?'Edit ':'Add ')+e.t+'</h3><div class="fg">';
+ e.f.forEach(([n,t])=>{
+  const p=parse(t);let v=r[n];
+  if(v==null&&DEF.includes(n))v=today();
+  if(v==null&&p.ty=='bool')v=true;
+  const rq=p.req?' required':'',a=' id="f_'+n+'" name="'+n+'"';let inp;
+  if(p.ty=='area')inp='<textarea'+a+rq+' rows="2">'+(v||'')+'</textarea>';
+  else if(p.ty=='bool')inp='<input type="checkbox"'+a+(v?' checked':'')+' style="width:auto">';
+  else if(p.ty=='sel')inp='<select'+a+rq+'><option value="">Select</option>'+p.x.split('|').map(o=>'<option'+(o==v?' selected':'')+'>'+o+'</option>').join('')+'</select>';
+  else if(p.ty=='fk')inp='<select'+a+rq+'><option value="">Select</option>'+db[p.x].map(o=>'<option value="'+o[E[p.x].pk]+'"'+(o[E[p.x].pk]==v?' selected':'')+'>'+E[p.x].d(o)+'</option>').join('')+'</select>';
+  else inp='<input type="'+(p.ty=='number'?'number" step="0.01':p.ty)+'"'+a+rq+' value="'+(v==null?'':String(v).replace(/"/g,'&quot;'))+'">';
+  h+='<div class="'+(p.ty=='area'?'full':'')+'"><label for="f_'+n+'">'+lab(n)+(p.req?' *':'')+'</label>'+inp+'</div>';
+ });
+ $('frm').innerHTML=h+'</div><div class="ft"><button type="button" class="btn grey" onclick="$(\'dlg\').close()">Cancel</button><button class="btn" type="submit">Save</button></div>';
+ $('dlg').showModal();
+}
+$('frm').onsubmit=ev=>{
+ ev.preventDefault();const e=E[cur],o={};
+ e.f.forEach(([n,t])=>{const p=parse(t),el=$('f_'+n);o[n]=p.ty=='bool'?el.checked:p.ty=='number'?(el.value===''?'':num(el.value)):p.ty=='fk'?(el.value?+el.value:''):el.value});
+ let rec;if(editing){Object.assign(editing,o);rec=editing}else rec=add(cur,o);
+ after(cur,rec);save();$('dlg').close();portalOn?view():(prof(),site());
+};
+$('frm').oninput=$('frm').onchange=ev=>{
+ const g=n=>$('f_'+n)?num($('f_'+n).value):0,s=(n,v)=>{if($('f_'+n))$('f_'+n).value=v};
+ if(cur=='billitem'){
+  if(ev.target.id=='f_ServiceID'){const sv=row('service',ev.target.value);if(sv){s('Description',sv.ServiceName);s('UnitPrice',sv.Charge);if(!g('Quantity'))s('Quantity',1)}}
+  s('Amount',+(g('Quantity')*g('UnitPrice')).toFixed(2));
+ }
+ if(cur=='bill'){s('TotalAmount',+(g('Subtotal')-g('Discount')+g('Tax')).toFixed(2));if(ev.target.id=='f_AppointmentID'){const a=row('appointment',ev.target.value);if(a)s('PatientID',a.PatientID)}}
+ if(cur=='payment'&&ev.target.id=='f_BillID'&&!g('AmountPaid')){const b=row('bill',ev.target.value);if(b)s('AmountPaid',b.TotalAmount)}
+};
+/* business rules: bill totals follow bill items; bill status follows payments */
+function after(k,r){if(k=='billitem'){r.Amount=+(num(r.Quantity)*num(r.UnitPrice)).toFixed(2);recalc(r.BillID)}if(k=='bill')recalc(r.BillID);if(k=='payment')pay(r.BillID)}
+function recalc(id){const b=row('bill',id);if(!b)return;const it=db.billitem.filter(i=>i.BillID==id);if(it.length)b.Subtotal=+it.reduce((s,i)=>s+num(i.Amount),0).toFixed(2);b.TotalAmount=+(num(b.Subtotal)-num(b.Discount)+num(b.Tax)).toFixed(2);pay(id)}
+function pay(id){const b=row('bill',id);if(!b||b.Status=='Cancelled')return;const p=db.payment.filter(x=>x.BillID==id&&x.Status=='Completed').reduce((s,x)=>s+num(x.AmountPaid),0);b.Status=p<=0?'Unpaid':p>=num(b.TotalAmount)?'Paid':'Partially Paid'}
+function del(id){
+ const e=E[cur];
+ for(const k in E)for(const f of E[k].f){const p=parse(f[1]);if(p.ty=='fk'&&p.x==cur&&db[k].some(r=>r[f[0]]==id))return alert('Cannot delete: this record is used in '+E[k].t+'. Remove those first.')}
+ if(!confirm('Delete this record?'))return;
+ const r=row(cur,id);db[cur]=db[cur].filter(x=>x[e.pk]!=id);
+ if(cur=='billitem')recalc(r.BillID);if(cur=='payment')pay(r.BillID);
+ save();view();
+}
+site();
+</script>
+</body>
+</html>
