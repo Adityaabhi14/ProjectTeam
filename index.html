@@ -302,7 +302,7 @@ function del(id){
 }
   const CLIENT_ID = "hospital-frontend";
 const AUTH_SERVER = "http://localhost:5000";
-const SCOPE = "profile";
+const SCOPE = "profile api.read";
   async function login() {
     const { codeVerifier, codeChallenge } =
         await generateCodeChallenge();
@@ -418,7 +418,19 @@ async function generateCodeChallenge() {
 const tokens = await response.json();
 
 console.log("Tokens received:", tokens);
+const profileResponse = await fetch(
+    "http://localhost:6000/api/profile",
+    {
+        headers: {
+            "Authorization":
+                "Bearer " + tokens.access_token
+        }
+    }
+);
 
+const profileData = await profileResponse.json();
+
+console.log("Protected profile:", profileData);
     console.log("Authorization code received:", code);
     console.log("PKCE verifier received:", codeVerifier);
 }
