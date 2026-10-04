@@ -80,7 +80,7 @@ dialog::backdrop{background:#0008}
 <header><nav>
   <a class="logo" href="#" onclick="show('site');return false" style="text-decoration:none">CarePoint Hospital</a>
   <div class="links" id="plinks"><a href="#departments">Departments</a><a href="#doctors">Doctors</a><a href="#book">Book</a><a href="#contact">Contact</a></div>
-  <span style="display:flex;gap:8px"><button class="btn grey" id="pfbtn" onclick="show('profile')">My profile</button><button class="btn" id="swbtn" onclick="show($('site').hidden?'site':'portal')">Staff portal</button></span>
+ <span style="display:flex;gap:8px"><button class="btn" onclick="login()">Login</button><button class="btn grey" id="pfbtn" onclick="show('profile')">My profile</button><button class="btn" id="swbtn" onclick="show($('site').hidden?'site':'portal')">Staff portal</button></span>
 </nav></header>
 
 <div id="site">
