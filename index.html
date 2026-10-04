@@ -300,6 +300,10 @@ function del(id){
  if(cur=='billitem')recalc(r.BillID);if(cur=='payment')pay(r.BillID);
  save();view();
 }
+  const CLIENT_ID = "hospital-frontend";
+const AUTH_SERVER = "http://localhost:5000";
+const SCOPE = "profile";
+  
 site();
 </script>
 </body>
