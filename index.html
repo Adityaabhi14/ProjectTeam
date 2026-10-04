@@ -375,7 +375,36 @@ async function generateCodeChallenge() {
         codeVerifier,
         codeChallenge
     };
+}async function handleCallback() {
+    const params = new URLSearchParams(
+        window.location.search
+    );
+
+    const code = params.get("code");
+    const state = params.get("state");
+
+    if (!code) {
+        return;
+    }
+
+    const savedState =
+        sessionStorage.getItem("oauth_state");
+
+    if (state !== savedState) {
+        alert("Invalid OAuth state");
+        return;
+    }
+
+    const codeVerifier =
+        sessionStorage.getItem("code_verifier");
+
+    console.log("Authorization code received:", code);
+    console.log("PKCE verifier received:", codeVerifier);
 }
+
+handleCallback();
+
+
 site();
 </script>
 </body>
