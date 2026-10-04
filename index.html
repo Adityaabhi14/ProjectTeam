@@ -303,6 +303,35 @@ function del(id){
   const CLIENT_ID = "hospital-frontend";
 const AUTH_SERVER = "http://localhost:5000";
 const SCOPE = "profile";
+  async function login() {
+    const { codeVerifier, codeChallenge } =
+        await generateCodeChallenge();
+
+    sessionStorage.setItem(
+        "code_verifier",
+        codeVerifier
+    );
+
+    const state = generateRandomString(32);
+
+    sessionStorage.setItem(
+        "oauth_state",
+        state
+    );
+
+    const params = new URLSearchParams({
+        response_type: "code",
+        client_id: CLIENT_ID,
+        redirect_uri: window.location.origin + "/",
+        scope: SCOPE,
+        state: state,
+        code_challenge: codeChallenge,
+        code_challenge_method: "S256"
+    });
+
+    window.location.href =
+        AUTH_SERVER + "/authorize?" + params.toString();
+}
 
 
 function generateRandomString(length) {
