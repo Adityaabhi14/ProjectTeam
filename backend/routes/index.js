@@ -15,6 +15,7 @@ import paymentRoutes from './paymentRoutes.js';
 import floorWardRoutes from './floorWardRoutes.js';
 import roomRoutes from './roomRoutes.js';
 import dashboardRoutes from './dashboardRoutes.js';
+import chatbotRoutes from '../chatbot/chatbotRoutes.js';
 
 const router = express.Router();
 
@@ -45,5 +46,6 @@ router.use('/payments', paymentRoutes);
 router.use('/floor-wards', floorWardRoutes);
 router.use('/rooms', roomRoutes);
 router.use('/dashboard', dashboardRoutes);
+router.use('/chatbot', chatbotRoutes);
 
 export default router;

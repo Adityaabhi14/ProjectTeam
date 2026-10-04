@@ -27,6 +27,10 @@ export const config = {
   jwt: {
     secret: process.env.JWT_SECRET || 'carepoint_hospital_super_secret_jwt_key_2026',
     expiresIn: process.env.JWT_EXPIRES_IN || '7d'
+  },
+  gemini: {
+    apiKey: process.env.GEMINI_API_KEY || '',
+    model: process.env.GEMINI_MODEL || 'gemini-2.5-flash'
   }
 };
 

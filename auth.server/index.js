@@ -31,7 +31,7 @@ function base64url(input) {
 }
 
 function sha256baseurl(str) {
-  const hash = createhash("sha256").update(str).digest();
+  const hash = createHash("sha256").update(str).digest();
   return base64url(hash);
 }
 

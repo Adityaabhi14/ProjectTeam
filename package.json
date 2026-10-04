@@ -20,6 +20,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google/genai": "^2.27.0",
+    "@google/generative-ai": "^0.24.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^2.3.0",
     "cookie-parser": "^1.4.7",
