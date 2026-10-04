@@ -303,7 +303,50 @@ function del(id){
   const CLIENT_ID = "hospital-frontend";
 const AUTH_SERVER = "http://localhost:5000";
 const SCOPE = "profile";
-  
+
+
+function generateRandomString(length) {
+    const chars =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~";
+
+    let result = "";
+
+    for (let i = 0; i < length; i++) {
+        result += chars.charAt(
+            Math.floor(Math.random() * chars.length)
+        );
+    }
+
+    return result;
+}
+
+function base64url(buffer) {
+    return btoa(
+        String.fromCharCode(...new Uint8Array(buffer))
+    )
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_")
+        .replace(/=+$/, "");
+}
+
+async function generateCodeChallenge() {
+    const codeVerifier = generateRandomString(64);
+
+    const encoder = new TextEncoder();
+    const data = encoder.encode(codeVerifier);
+
+    const hash = await crypto.subtle.digest(
+        "SHA-256",
+        data
+    );
+
+    const codeChallenge = base64url(hash);
+
+    return {
+        codeVerifier,
+        codeChallenge
+    };
+}
 site();
 </script>
 </body>
