@@ -63,12 +63,13 @@ class ApiService {
         const res = await fetch(`${API_BASE}/auth/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username, password })
+          // The existing authentication controller expects these exact field names.
+          body: JSON.stringify({ Username: username, Password: password })
         });
         const result = await res.json();
-        if (result.success && result.data?.token) {
-          this.setToken(result.data.token);
-          return { success: true, token: result.data.token };
+        if (result.success && result.token) {
+          this.setToken(result.token);
+          return { success: true, token: result.token };
         }
         return { success: false, message: result.message || 'Invalid credentials' };
       } catch (err: any) {

@@ -1320,4 +1320,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Also init public site data (behind the login screen)
-site();
+site();s

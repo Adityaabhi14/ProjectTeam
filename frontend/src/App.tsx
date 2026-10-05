@@ -25,15 +25,15 @@ import { HealthAssessment } from './components/assessment/HealthAssessment';
 import { PatientHealthTracker } from './components/tracker/PatientHealthTracker';
 import { PharmacyCatalog } from './components/pharmacy/PharmacyCatalog';
 import { StaffPortal } from './components/staff/StaffPortal';
-import { StaffAuthModal } from './components/staff/StaffAuthModal';
 import { CareGuideChat } from './components/chatbot/CareGuideChat';
+import { LoginDomain } from './components/login';
 
 export const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<NavigationView>('home');
   const [isCareGuideOpen, setIsCareGuideOpen] = useState(() => window.location.hash === '#chatbot');
   const [data, setData] = useState<StorageData>(() => getStoredData());
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
-  const [isStaffAuthOpen, setIsStaffAuthOpen] = useState(false);
+  const [isLoginDomainOpen, setIsLoginDomainOpen] = useState(false);
   const [preselectedDoctor, setPreselectedDoctor] = useState<Doctor | null>(null);
   const [selectedDeptFilter, setSelectedDeptFilter] = useState<string>('all');
   const [appointmentsBoxSide, setAppointmentsBoxSide] = useState<'left' | 'right'>('left');
@@ -155,7 +155,7 @@ export const App: React.FC = () => {
           currentView={currentView}
           onNavigate={handleNavigate}
           onOpenBooking={() => handleOpenBooking(null)}
-          onOpenStaffAuth={() => setIsStaffAuthOpen(true)}
+          onOpenStaffAuth={() => setIsLoginDomainOpen(true)}
         />
       </div>
 
@@ -269,11 +269,12 @@ export const App: React.FC = () => {
         }}
       />
 
-      {/* ── Staff Operations Auth Modal ──────────────────────────── */}
-      <StaffAuthModal
-        isOpen={isStaffAuthOpen}
-        onClose={() => setIsStaffAuthOpen(false)}
+      {/* ── Staff Login Domain (frontend-only) ──────────────────── */}
+      <LoginDomain
+        isOpen={isLoginDomainOpen}
+        onClose={() => setIsLoginDomainOpen(false)}
         onLoginSuccess={() => {
+          setIsLoginDomainOpen(false);
           handleNavigate('staff');
         }}
       />
