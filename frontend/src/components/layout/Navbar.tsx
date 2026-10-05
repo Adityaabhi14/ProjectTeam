@@ -17,7 +17,8 @@ import {
   ClipboardList,
   ShieldAlert,
   ArrowRight,
-  Sparkles
+  Sparkles,
+  MessageCircle
 } from 'lucide-react';
 import { NavigationView } from '../../types';
 
@@ -44,6 +45,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'assessment', label: 'Health Assessment', icon: <ClipboardList size={16} /> },
     { id: 'tracker', label: 'Health Tracker', icon: <Activity size={16} /> },
     { id: 'pharmacy', label: 'Pharmacy', icon: <Pill size={16} /> },
+    { id: 'chatbot', label: 'CareGuide', icon: <MessageCircle size={16} /> },
     { id: 'patient-profile', label: 'Patient Portal', icon: <UserCheck size={16} /> }
   ];
 

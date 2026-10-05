@@ -26,9 +26,11 @@ import { PatientHealthTracker } from './components/tracker/PatientHealthTracker'
 import { PharmacyCatalog } from './components/pharmacy/PharmacyCatalog';
 import { StaffPortal } from './components/staff/StaffPortal';
 import { StaffAuthModal } from './components/staff/StaffAuthModal';
+import { CareGuideChat } from './components/chatbot/CareGuideChat';
 
 export const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<NavigationView>('home');
+  const [isCareGuideOpen, setIsCareGuideOpen] = useState(() => window.location.hash === '#chatbot');
   const [data, setData] = useState<StorageData>(() => getStoredData());
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [isStaffAuthOpen, setIsStaffAuthOpen] = useState(false);
@@ -68,9 +70,27 @@ export const App: React.FC = () => {
     refreshData();
   }, []);
 
+  // Preserve the old #chatbot link as a convenient way to open the floating assistant.
+  useEffect(() => {
+    const syncChatbotRoute = () => {
+      setIsCareGuideOpen(window.location.hash === '#chatbot');
+    };
+
+    window.addEventListener('popstate', syncChatbotRoute);
+    return () => window.removeEventListener('popstate', syncChatbotRoute);
+  }, []);
+
   // Handlers for cross-component interactions
   const handleNavigate = (view: NavigationView) => {
+    if (view === 'chatbot') {
+      setIsCareGuideOpen(true);
+      return;
+    }
     setCurrentView(view);
+    const targetHash = '';
+    if (window.location.hash !== targetHash) {
+      window.history.pushState(null, '', `${window.location.pathname}${targetHash}`);
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -256,6 +276,15 @@ export const App: React.FC = () => {
         onLoginSuccess={() => {
           handleNavigate('staff');
         }}
+      />
+
+      {/* ── Floating CareGuide (frontend-only) ─────────────────── */}
+      <CareGuideChat
+        isOpen={isCareGuideOpen}
+        onOpen={() => setIsCareGuideOpen(true)}
+        onClose={() => setIsCareGuideOpen(false)}
+        onBookAppointment={() => handleOpenBooking(null)}
+        onBrowseDoctors={() => handleNavigate('doctors')}
       />
     </div>
   );

@@ -11,6 +11,7 @@ export type NavigationView =
   | 'assessment'
   | 'tracker'
   | 'pharmacy'
+  | 'chatbot'
   | 'staff';
 
 // ── Hospital Entities ──────────────────────────────────────────
