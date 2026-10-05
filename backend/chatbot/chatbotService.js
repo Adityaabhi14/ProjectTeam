@@ -1,6 +1,7 @@
 import geminiClient from './geminiClient.js';
 import hospitalContext from './hospitalContext.js';
 import prompts from './prompts.js';
+import { randomUUID } from 'crypto';
 
 // In-memory conversation session store (can be replaced/augmented with Redis or DB by teammates)
 const sessionStore = new Map();
@@ -24,7 +25,7 @@ setInterval(cleanupExpiredSessions, 1000 * 60 * 15);
  */
 export function getOrCreateSession(sessionId) {
   if (!sessionId) {
-    sessionId = `session_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+    sessionId = `session_${randomUUID()}`;
   }
 
   let session = sessionStore.get(sessionId);

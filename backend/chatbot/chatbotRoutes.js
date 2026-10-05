@@ -1,5 +1,11 @@
 import express from 'express';
 import chatbotController from './chatbotController.js';
+import {
+  chatbotRateLimit,
+  requireGeminiConfiguration,
+  validateChatMessage,
+  validateTriageRequest
+} from '../middleware/chatbotMiddleware.js';
 
 const router = express.Router();
 
@@ -16,15 +22,15 @@ router.get('/status', chatbotController.getChatbotStatus);
  * @desc    Send a message to the AI chatbot, get conversational response + suggested doctors & medicines
  * @access  Public (Middleware can be plugged in by teammates)
  */
-router.post('/message', chatbotController.handleChatMessage);
-router.post('/chat', chatbotController.handleChatMessage);
+router.post('/message', chatbotRateLimit, requireGeminiConfiguration, validateChatMessage, chatbotController.handleChatMessage);
+router.post('/chat', chatbotRateLimit, requireGeminiConfiguration, validateChatMessage, chatbotController.handleChatMessage);
 
 /**
  * @route   POST /api/chatbot/triage
  * @desc    Submit structured symptoms report to get urgency level, suggested doctor/department, and safe medicines
  * @access  Public
  */
-router.post('/triage', chatbotController.handleSymptomTriage);
+router.post('/triage', chatbotRateLimit, requireGeminiConfiguration, validateTriageRequest, chatbotController.handleSymptomTriage);
 
 /**
  * @route   GET /api/chatbot/specialists
