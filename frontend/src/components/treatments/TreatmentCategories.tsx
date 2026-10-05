@@ -426,7 +426,7 @@ export const TreatmentCategories: React.FC<TreatmentCategoriesProps> = ({
 
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '10px', borderTop: '1px solid #EFECE6' }}>
                           <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#17201D' }}>
-                            ${doc.ConsultationFee || 70} fee
+                            ₹{doc.ConsultationFee || 600} fee
                           </span>
                           <span className="badge badge-success" style={{ fontSize: '0.7rem' }}>
                             Accepting Patients

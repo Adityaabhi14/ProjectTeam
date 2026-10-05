@@ -336,7 +336,7 @@ export const StaffPortal: React.FC<StaffPortalProps> = ({
               Processed Receipts
             </div>
             <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#164A41', marginTop: '2px' }}>
-              ${totalRevenue.toFixed(0)}
+              ₹{totalRevenue.toFixed(0)}
             </div>
           </div>
         </div>

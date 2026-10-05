@@ -413,7 +413,7 @@ export const DoctorDiscovery: React.FC<DoctorDiscoveryProps> = ({
                         Consultation
                       </div>
                       <div style={{ fontSize: '1.15rem', fontWeight: 800, color: '#164A41' }}>
-                        ${doctor.ConsultationFee || 70}
+                        ₹{doctor.ConsultationFee || 600}
                       </div>
                     </div>
 
@@ -525,7 +525,7 @@ export const DoctorDiscovery: React.FC<DoctorDiscoveryProps> = ({
                       Consultation Fee
                     </div>
                     <div style={{ fontSize: '1rem', fontWeight: 700, color: '#164A41' }}>
-                      ${selectedDoctor.ConsultationFee || 70}
+                      ₹{selectedDoctor.ConsultationFee || 600}
                     </div>
                   </div>
                   <div>

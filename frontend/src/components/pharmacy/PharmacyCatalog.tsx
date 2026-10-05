@@ -221,7 +221,7 @@ export const PharmacyCatalog: React.FC<PharmacyCatalogProps> = ({
                     Unit Price
                   </div>
                   <div style={{ fontSize: '1.3rem', fontWeight: 800, color: '#164A41' }}>
-                    ${med.UnitPrice.toFixed(2)}
+                    ₹{Number(med.UnitPrice || 0).toFixed(2)}
                   </div>
                 </div>
 
@@ -283,7 +283,7 @@ export const PharmacyCatalog: React.FC<PharmacyCatalogProps> = ({
                 </p>
 
                 <div style={{ backgroundColor: '#FAF8F4', border: '1px solid #E5E0D6', borderRadius: '12px', padding: '14px', fontSize: '0.85rem', color: '#164A41', fontWeight: 600 }}>
-                  Unit Price: ${orderedItem.UnitPrice.toFixed(2)} · In-Clinic Pick-up & Express Delivery Active
+                  Unit Price: ₹{Number(orderedItem.UnitPrice || 0).toFixed(2)} · In-Clinic Pick-up & Express Delivery Active
                 </div>
               </div>
 

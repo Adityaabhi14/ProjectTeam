@@ -3,11 +3,13 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 
 import config from './config/config.js';
 import { testConnection } from './config/db.js';
 import apiRouter from './routes/index.js';
+import { initiateGoogleAuth, handleGoogleCallback } from './controllers/authController.js';
 import { errorHandler, notFound } from './middleware/errorHandler.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -29,15 +31,34 @@ if (config.env === 'development') {
   app.use(morgan('dev'));
 }
 
-// Serve Frontend Static Files from project root (index.html, style.css, script.js)
-app.use(express.static(projectRoot));
+// ── Google OAuth Direct Callbacks (Matching Google Cloud Console) ──
+app.get('/google', initiateGoogleAuth);
+app.get('/google/callback', handleGoogleCallback);
+
+// ── Static File Serving ────────────────────────────────────────────
+// Prefer the compiled React build (frontend/dist) when it exists.
+// Fall back to the project root for legacy plain-HTML mode.
+const frontendDist = path.resolve(__dirname, '../frontend/dist');
+const hasDist = fs.existsSync(path.join(frontendDist, 'index.html'));
+
+if (hasDist) {
+  // Serve compiled React app assets
+  app.use(express.static(frontendDist));
+} else {
+  // Fallback: serve project-root static files (style.css, script.js, etc.)
+  app.use(express.static(projectRoot));
+}
 
 // Mount REST API
 app.use('/api', apiRouter);
 
-// Fallback route to serve index.html for client-side navigation
-app.get('/', (req, res) => {
-  res.sendFile(path.join(projectRoot, 'index.html'));
+// SPA / HTML fallback — must come AFTER API routes
+app.get('/{*path}', (req, res) => {
+  if (hasDist) {
+    res.sendFile(path.join(frontendDist, 'index.html'));
+  } else {
+    res.sendFile(path.join(projectRoot, 'index.html'));
+  }
 });
 
 // General 404 handler

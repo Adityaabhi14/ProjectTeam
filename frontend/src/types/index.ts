@@ -280,3 +280,20 @@ export interface MedicalReportDoc {
   }[];
   notes: string;
 }
+
+// ── Authentication & User Session ────────────────────────────────
+
+export interface AuthUser {
+  UserID?: number;
+  Username: string;
+  Email: string;
+  Role: 'Patient' | 'Doctor' | 'Staff' | 'Admin';
+  PatientID?: number;
+  DoctorID?: number;
+  name?: string;
+  picture?: string;
+  provider?: 'google' | 'local' | 'demo';
+  token?: string;
+  patientDetails?: Patient;
+}
+

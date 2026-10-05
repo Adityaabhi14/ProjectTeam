@@ -384,7 +384,7 @@ export const AppointmentBookingModal: React.FC<AppointmentBookingModalProps> = (
 
                         <div style={{ textAlign: 'right' }}>
                           <div style={{ fontWeight: 800, color: '#164A41', fontSize: '0.95rem' }}>
-                            ${doc.ConsultationFee || 70}
+                            ₹{doc.ConsultationFee || 600}
                           </div>
                           <div style={{ fontSize: '0.72rem', color: '#8A9993' }}>fee</div>
                         </div>
@@ -424,7 +424,7 @@ export const AppointmentBookingModal: React.FC<AppointmentBookingModalProps> = (
                   </div>
                 </div>
                 <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#164A41' }}>
-                  ${currentDoctor?.ConsultationFee || 70}
+                  ₹{currentDoctor?.ConsultationFee || 600}
                 </div>
               </div>
 
@@ -648,7 +648,7 @@ export const AppointmentBookingModal: React.FC<AppointmentBookingModalProps> = (
               ) : (
                 <>
                   <CheckCircle2 size={16} />
-                  <span>Confirm Appointment (${currentDoctor?.ConsultationFee || 70})</span>
+                  <span>Confirm Appointment (₹{currentDoctor?.ConsultationFee || 600})</span>
                 </>
               )}
             </button>

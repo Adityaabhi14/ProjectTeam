@@ -31,6 +31,12 @@ export const config = {
   gemini: {
     apiKey: process.env.GEMINI_API_KEY || '',
     model: process.env.GEMINI_MODEL || 'gemini-2.5-flash'
+  },
+  google: {
+    clientId: process.env.GOOGLE_CLIENT_ID || '702490979909-o88ogejgv8nlueu2df3k49nt53vp31c3.apps.googleusercontent.com',
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET || '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',
+    redirectUri: process.env.GOOGLE_REDIRECT_URI || 'http://localhost:5000/google/callback',
+    frontendUrl: process.env.FRONTEND_URL || 'http://localhost:5000'
   }
 };
 

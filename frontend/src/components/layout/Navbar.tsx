@@ -1,6 +1,6 @@
 // =================================================================
 // CarePoint Health Management System — Editorial Navigation Bar
-// Responsive Header · Warm Palette · Mobile Drawer · Emergency Triage
+// Multi-User Auth · Google Identity Integration · Responsive Drawer
 // =================================================================
 
 import React, { useState } from 'react';
@@ -18,24 +18,32 @@ import {
   ShieldAlert,
   ArrowRight,
   Sparkles,
-  MessageCircle
+  MessageCircle,
+  User,
+  LogOut,
+  ShieldCheck
 } from 'lucide-react';
-import { NavigationView } from '../../types';
+import { NavigationView, AuthUser } from '../../types';
 
 interface NavbarProps {
   currentView: NavigationView;
+  currentUser: AuthUser | null;
   onNavigate: (view: NavigationView) => void;
   onOpenBooking: () => void;
-  onOpenStaffAuth: () => void;
+  onOpenAuth: (mode?: 'patient' | 'staff') => void;
+  onLogout: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   currentView,
+  currentUser,
   onNavigate,
   onOpenBooking,
-  onOpenStaffAuth
+  onOpenAuth,
+  onLogout
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
   const navItems: { id: NavigationView; label: string; icon: React.ReactNode }[] = [
     { id: 'home', label: 'Home', icon: <HeartPulse size={16} /> },
@@ -52,6 +60,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const handleNavClick = (view: NavigationView) => {
     onNavigate(view);
     setMobileMenuOpen(false);
+    setUserDropdownOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -95,7 +104,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               24/7 Clinical Emergency
             </span>
-            <span style={{ opacity: 0.9 }}>Emergency Triage & Acute Trauma Desk:</span>
+            <span style={{ opacity: 0.9 }}>Emergency Triage & Trauma Desk:</span>
             <a
               href="tel:18004523200"
               style={{
@@ -116,7 +125,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               Telehealth Consultations & In-Clinic Open
             </span>
             <button
-              onClick={onOpenStaffAuth}
+              onClick={() => onOpenAuth('staff')}
               style={{
                 background: 'rgba(255,255,255,0.12)',
                 border: '1px solid rgba(255,255,255,0.2)',
@@ -248,30 +257,206 @@ export const Navbar: React.FC<NavbarProps> = ({
             })}
           </nav>
 
-          {/* Right Action CTAs */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          {/* Right Action CTAs & Auth Controls */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <button
               onClick={onOpenBooking}
               className="btn btn-accent"
-              style={{
-                display: 'none'
-              }}
+              style={{ display: 'none' }}
               id="desktop-book-btn"
             >
               <Calendar size={16} />
               <span>Book Appointment</span>
             </button>
 
-            <button
-              onClick={onOpenStaffAuth}
-              className="btn btn-outline btn-sm"
-              style={{
-                display: 'none'
-              }}
-              id="desktop-staff-btn"
-            >
-              <span>Operations</span>
-            </button>
+            {/* Authenticated User Pill vs. Sign In Button */}
+            {currentUser ? (
+              <div style={{ position: 'relative' }}>
+                <button
+                  onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    backgroundColor: '#FAF8F4',
+                    border: '1px solid #164A41',
+                    borderRadius: '9999px',
+                    padding: '4px 12px 4px 6px',
+                    cursor: 'pointer'
+                  }}
+                  id="desktop-user-btn"
+                >
+                  {currentUser.picture ? (
+                    <img
+                      src={currentUser.picture}
+                      alt={currentUser.name || 'User'}
+                      style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover' }}
+                    />
+                  ) : (
+                    <div
+                      style={{
+                        width: '28px',
+                        height: '28px',
+                        borderRadius: '50%',
+                        backgroundColor: '#164A41',
+                        color: '#FFFFFF',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '0.78rem',
+                        fontWeight: 800
+                      }}
+                    >
+                      {currentUser.name ? currentUser.name.charAt(0).toUpperCase() : 'U'}
+                    </div>
+                  )}
+
+                  <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#164A41', maxWidth: '110px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {currentUser.name?.split(' ')[0] || 'My Profile'}
+                  </span>
+                </button>
+
+                {/* Dropdown Menu */}
+                {userDropdownOpen && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '115%',
+                      right: 0,
+                      width: '240px',
+                      backgroundColor: '#FFFFFF',
+                      borderRadius: '16px',
+                      border: '1px solid #E5E0D6',
+                      boxShadow: '0 12px 32px rgba(22, 74, 65, 0.12)',
+                      padding: '8px',
+                      zIndex: 1000
+                    }}
+                  >
+                    <div style={{ padding: '10px 12px', borderBottom: '1px solid #EFECE6' }}>
+                      <div style={{ fontWeight: 800, color: '#164A41', fontSize: '0.88rem' }}>
+                        {currentUser.name || currentUser.Username}
+                      </div>
+                      <div style={{ fontSize: '0.74rem', color: '#5F6E68', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        {currentUser.Email}
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={() => handleNavClick('patient-profile')}
+                      style={{
+                        width: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        padding: '10px 12px',
+                        border: 'none',
+                        background: 'transparent',
+                        borderRadius: '10px',
+                        fontSize: '0.84rem',
+                        fontWeight: 600,
+                        color: '#164A41',
+                        cursor: 'pointer',
+                        textAlign: 'left'
+                      }}
+                      onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#FAF8F4')}
+                      onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'transparent')}
+                    >
+                      <User size={15} />
+                      <span>View Health Profile</span>
+                    </button>
+
+                    <button
+                      onClick={() => handleNavClick('appointments')}
+                      style={{
+                        width: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        padding: '10px 12px',
+                        border: 'none',
+                        background: 'transparent',
+                        borderRadius: '10px',
+                        fontSize: '0.84rem',
+                        fontWeight: 600,
+                        color: '#164A41',
+                        cursor: 'pointer',
+                        textAlign: 'left'
+                      }}
+                      onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#FAF8F4')}
+                      onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'transparent')}
+                    >
+                      <Calendar size={15} />
+                      <span>My Appointments</span>
+                    </button>
+
+                    {currentUser.Role === 'Admin' || currentUser.Role === 'Staff' || currentUser.Role === 'Doctor' ? (
+                      <button
+                        onClick={() => handleNavClick('staff')}
+                        style={{
+                          width: '100%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          padding: '10px 12px',
+                          border: 'none',
+                          background: 'transparent',
+                          borderRadius: '10px',
+                          fontSize: '0.84rem',
+                          fontWeight: 700,
+                          color: '#2F7D6D',
+                          cursor: 'pointer',
+                          textAlign: 'left'
+                        }}
+                        onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#FAF8F4')}
+                        onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'transparent')}
+                      >
+                        <ShieldCheck size={15} />
+                        <span>Operations Center</span>
+                      </button>
+                    ) : null}
+
+                    <div style={{ borderTop: '1px solid #EFECE6', marginTop: '4px', paddingTop: '4px' }}>
+                      <button
+                        onClick={() => {
+                          setUserDropdownOpen(false);
+                          onLogout();
+                        }}
+                        style={{
+                          width: '100%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          padding: '10px 12px',
+                          border: 'none',
+                          background: 'transparent',
+                          borderRadius: '10px',
+                          fontSize: '0.84rem',
+                          fontWeight: 600,
+                          color: '#C0392B',
+                          cursor: 'pointer',
+                          textAlign: 'left'
+                        }}
+                        onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#FFF5F5')}
+                        onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'transparent')}
+                      >
+                        <LogOut size={15} />
+                        <span>Sign Out</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <button
+                onClick={() => onOpenAuth('patient')}
+                className="btn btn-outline btn-sm"
+                style={{ display: 'none' }}
+                id="desktop-signin-btn"
+              >
+                <User size={15} />
+                <span>Sign In / Google</span>
+              </button>
+            )}
 
             {/* Mobile Hamburger Toggle Button */}
             <button
@@ -372,6 +557,70 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </button>
               </div>
 
+              {/* Logged in User Summary in Drawer */}
+              {currentUser ? (
+                <div
+                  style={{
+                    backgroundColor: '#FAF8F4',
+                    border: '1px solid #E5E0D6',
+                    borderRadius: '12px',
+                    padding: '12px',
+                    marginBottom: '16px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div
+                      style={{
+                        width: '34px',
+                        height: '34px',
+                        borderRadius: '50%',
+                        backgroundColor: '#164A41',
+                        color: '#FFFFFF',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '0.85rem',
+                        fontWeight: 800
+                      }}
+                    >
+                      {currentUser.name ? currentUser.name.charAt(0).toUpperCase() : 'U'}
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: 700, fontSize: '0.88rem', color: '#164A41' }}>
+                        {currentUser.name || currentUser.Username}
+                      </div>
+                      <div style={{ fontSize: '0.72rem', color: '#5F6E68' }}>
+                        {currentUser.Email}
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      onLogout();
+                    }}
+                    style={{ background: 'none', border: 'none', color: '#C0392B', cursor: 'pointer' }}
+                  >
+                    <LogOut size={16} />
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenAuth('patient');
+                  }}
+                  className="btn btn-primary btn-sm"
+                  style={{ width: '100%', marginBottom: '16px' }}
+                >
+                  <User size={15} />
+                  <span>Sign In / Continue with Google</span>
+                </button>
+              )}
+
               {/* Navigation Links */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                 {navItems.map(item => {
@@ -431,27 +680,13 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
-                  onOpenStaffAuth();
+                  onOpenAuth('staff');
                 }}
                 className="btn btn-outline"
                 style={{ width: '100%' }}
               >
                 <span>Hospital Staff Operations →</span>
               </button>
-
-              <div
-                style={{
-                  backgroundColor: '#FAF8F4',
-                  borderRadius: '12px',
-                  padding: '12px',
-                  border: '1px solid #E5E0D6',
-                  fontSize: '0.8rem',
-                  color: '#5F6E68',
-                  textAlign: 'center'
-                }}
-              >
-                Emergency hotline: <strong style={{ color: '#164A41' }}>+1 (800) 452-CARE</strong>
-              </div>
             </div>
           </div>
         </div>
@@ -462,7 +697,8 @@ export const Navbar: React.FC<NavbarProps> = ({
         @media (min-width: 1024px) {
           .desktop-nav { display: flex !important; }
           #desktop-book-btn { display: inline-flex !important; }
-          #desktop-staff-btn { display: inline-flex !important; }
+          #desktop-signin-btn { display: inline-flex !important; }
+          #desktop-user-btn { display: inline-flex !important; }
           .mobile-hamburger { display: none !important; }
         }
       `}</style>
