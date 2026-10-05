@@ -1,0 +1,21 @@
+# ===================================================
+# CarePoint Hospital Management System - Frontend Dev Dockerfile
+# With Vite dev server and HMR support
+# ===================================================
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy dependency manifests
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy source code
+COPY . .
+
+EXPOSE 5173
+
+# Start Vite dev server on 0.0.0.0 for container access
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
